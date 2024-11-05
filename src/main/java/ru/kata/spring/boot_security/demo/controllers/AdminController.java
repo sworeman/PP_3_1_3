@@ -12,6 +12,7 @@ import ru.kata.spring.boot_security.demo.services.UserService;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin")
@@ -35,6 +36,12 @@ public class AdminController {
         model.addAttribute("allRoles", roleService.findAll());
         model.addAttribute("newUser", new User());
         return "admin";
+    }
+
+    public String getRoleString(User user) {
+        return user.getRoles().stream()
+                .map(role -> role.getAuthority().replace("ROLE_", ""))
+                .collect(Collectors.joining(", "));
     }
 
     @PostMapping("/add")

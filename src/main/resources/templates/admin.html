@@ -101,7 +101,7 @@
                             <td th:text="${user.lastname}"></td>
                             <td th:text="${user.age}"></td>
                             <td>
-                                <span th:each="role : ${user.roles}" th:text="${role.authority + ' '}"></span>
+                                <span th:each="role : ${user.roles}" th:text="${role.authority.replace('ROLE_', '')} + ' '"></span>
                             </td>
                             <td>
                                 <button class="btn btn-primary"
@@ -135,34 +135,34 @@
                 </div>
                 <!--вкладка добавления-->
                 <div class="tab-pane fade" id="new-user">
-                    <div class="header-section mb-3" style="background-color: #e9ecef; border-bottom: 2px solid #dee2e6; padding: 0.5rem 1rem;">
-                    <h3>Add new user</h3>
+                    <div class="header-section mb-3" style="background-color: #e9ecef; border-bottom: 2px solid #dee2e6; padding: 0.5rem 1rem; text-align: center;">
+                        <h3>Add new user</h3>
                     </div>
-                    <form action="/admin/add" method="post">
+                    <form action="/admin/add" method="post" class="text-center">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                         <div class="mb-3">
-                            <label for="firstname" class="form-label">First name</label>
-                            <input type="text" class="form-control" id="firstname" name="firstname" required>
+                            <label for="firstname" class="form-label" style="font-weight: bold;">First name</label>
+                            <input type="text" class="form-control w-25 mx-auto" id="firstname" name="firstname" required>
                         </div>
                         <div class="mb-3">
-                            <label for="lastname" class="form-label">Last name</label>
-                            <input type="text" class="form-control" id="lastname" name="lastname" required>
+                            <label for="lastname" class="form-label" style="font-weight: bold;">Last name</label>
+                            <input type="text" class="form-control w-25 mx-auto" id="lastname" name="lastname" required>
                         </div>
                         <div class="mb-3">
-                            <label for="age" class="form-label">Age</label>
-                            <input type="number" class="form-control" id="age" name="age" required>
+                            <label for="age" class="form-label" style="font-weight: bold;">Age</label>
+                            <input type="number" class="form-control w-25 mx-auto" id="age" name="age" required>
                         </div>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="username" name="username" required>
+                            <label for="username" class="form-label" style="font-weight: bold;">Username</label>
+                            <input type="text" class="form-control w-25 mx-auto" id="username" name="username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
+                            <label for="password" class="form-label" style="font-weight: bold;">Password</label>
+                            <input type="password" class="form-control w-25 mx-auto" id="password" name="password" required>
                         </div>
                         <div class="mb-3">
-                            <label for="role" class="form-label">Role</label>
-                            <select class="form-select" id="role" name="roles" multiple>
+                            <label for="role" class="form-label" style="font-weight: bold;">Role</label>
+                            <select class="form-select w-25 mx-auto" id="role" name="roles" multiple>
                                 <option th:each="role : ${allRoles}" th:value="${role.id}" th:text="${role.authority}"></option>
                             </select>
                         </div>
@@ -328,7 +328,15 @@
         modalUsernameInput.value = username;
 
         Array.from(modalRolesSelect.options).forEach(option => {
-            option.selected = roles.includes(option.value);
+            option.selected = false;
+        });
+
+        roles.forEach(roleId => {
+            Array.from(modalRolesSelect.options).forEach(option => {
+                if (option.value === roleId) {
+                    option.selected = true;
+                }
+            });
         });
     });
 </script>

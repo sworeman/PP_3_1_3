@@ -29,10 +29,10 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
-
     private String firstname;
     private String lastname;
     private byte age;
+    private String rolesString;
 
     public Long getId() {
         return id;
@@ -69,18 +69,23 @@ public class User implements UserDetails {
     public String getFirstname() {
         return firstname;
     }
+
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
+
     public String getLastname() {
         return lastname;
     }
+
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
     public byte getAge() {
         return age;
     }
+
     public void setAge(byte age) {
         this.age = age;
     }
@@ -110,5 +115,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public String getRolesString() {
+        return rolesString;
+    }
+
+    public void setRolesString(String rolesString) {
+        this.rolesString = rolesString;
     }
 }
